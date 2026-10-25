@@ -1,3 +1,5 @@
+"""Flask web server for the Emotion Detection application."""
+
 from flask import Flask, render_template, request
 from EmotionDetection import emotion_detector
 
@@ -5,11 +7,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    """Render the homepage."""
     return render_template('index.html')
 
 # Route 2: Analyze the user's text
 @app.route("/emotionDetector")
 def detect_emotion():
+    """run function"""
 
     # Get the text from the browser
     text = request.args.get("textToAnalyze")
@@ -20,7 +24,15 @@ def detect_emotion():
     if result['dominant_emotion'] is None:
         return "Invalid text! Please try again!"
 
-    opt = f"For the given statement, the system response is 'anger': {result['anger']}, 'disgust': {result['disgust']}, 'fear': {result['fear']}, 'joy': {result['joy']} and 'sadness': {result['sadness']}. The dominant emotion is {result['dominant_emotion']}."
+    opt = (
+        f"For the given statement, the system response is "
+        f"'anger': {result['anger']}, "
+        f"'disgust': {result['disgust']}, "
+        f"'fear': {result['fear']}, "
+        f"'joy': {result['joy']} and "
+        f"'sadness': {result['sadness']}. "
+        f"The dominant emotion is {result['dominant_emotion']}."
+    )
     return opt
 
 
